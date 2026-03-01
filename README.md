@@ -1643,17 +1643,13 @@ NewJirastoriestracker/
 - **Secure by Default**: All endpoints validate and sanitize input
 - **Proxy Pattern**: JIRA requests proxied for security
 
-## 🤝 Contributing
-
-This is a proprietary project for internal use. Contact the development team for contribution guidelines.
-
 ## �📝 License
 
 This project is proprietary software. All rights reserved.
 
 ## 👥 Support
 
-1. Contact system administrator
+Contact system administrator
 
 ## 🔄 Version History
 
@@ -1704,9 +1700,3 @@ This project is proprietary software. All rights reserved.
 
 ---
 
-**Last Updated**: March 2026  
-**Documentation Version**: 2.0.1
-
----
-
-**Built with ❤️ for efficient sprint tracking and Agile project management**
