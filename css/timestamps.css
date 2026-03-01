@@ -1,0 +1,102 @@
+/* Timestamp Styling */
+
+.timestamp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent4);
+}
+
+.timestamp-icon {
+  font-size: 11px;
+}
+
+.timestamp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.timestamp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface3);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  flex-wrap: wrap;
+}
+
+.timestamp-row:hover {
+  background: var(--surface);
+  border-left: 2px solid var(--accent4);
+  padding-left: 8px;
+}
+
+.timestamp-label {
+  font-weight: 600;
+  color: var(--text3);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.timestamp-value {
+  color: var(--text);
+  font-weight: 500;
+  font-size: 11px;
+}
+
+.timestamp-icon-label {
+  font-size: 13px;
+  margin-right: 4px;
+}
+
+/* Table cell timestamp */
+.table-timestamp {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+}
+
+.table-timestamp-created {
+  color: var(--accent4);
+  font-weight: 500;
+}
+
+.table-timestamp-modified {
+  color: var(--text3);
+  font-weight: 400;
+}
+
+.table-timestamp-relative {
+  font-style: italic;
+  color: var(--text3);
+  font-size: 9px;
+}
+
+/* Timestamp column header */
+.timestamp-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.timestamp-header-icon {
+  font-size: 13px;
+}

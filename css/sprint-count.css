@@ -1,0 +1,77 @@
+/* Sprint Count Badge Styling */
+
+.sprint-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 8px;
+  transition: all 0.2s ease;
+}
+
+.sprint-count-badge:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(124, 58, 237, 0.25) 100%);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+}
+
+.sprint-count-icon {
+  font-size: 12px;
+}
+
+.sprint-count-number {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sprint-count-label {
+  font-size: 10px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Summary Card Sprint Count */
+.sprint-summary-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-top: 8px;
+  transition: all 0.2s ease;
+}
+
+.sprint-summary-count:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+}
+
+.sprint-summary-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.sprint-summary-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sprint-summary-value-icon {
+  font-size: 16px;
+}

@@ -1,0 +1,61 @@
+/* Sprint Reminders Styles */
+
+#sprintRemindersModal .modal {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sprint Report Styles */
+
+#sprintReportSelectorModal .modal {
+  animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Reminder Settings Checkbox Styles */
+#reminderSettingsModal input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+#reminderSettingsModal input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+#reminderSettingsModal input[type="number"]::-webkit-outer-spin-button,
+#reminderSettingsModal input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+/* Sprint Report Card Hover Effects */
+#sprintReportSelectorModal .sprint-card-hover {
+  transition: all 0.2s ease;
+}
+
+#sprintReportSelectorModal .sprint-card-hover:hover {
+  background: var(--surface3);
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

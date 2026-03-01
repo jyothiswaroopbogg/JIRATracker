@@ -1,0 +1,101 @@
+/* Lazy Loading Styles */
+
+/* Chart Loading State */
+.chart-card {
+  position: relative;
+  min-height: 300px;
+}
+
+.chart-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border-radius: var(--radius);
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.chart-loading.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chart-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--surface2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.chart-loading-text {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Chart Skeleton */
+.chart-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0.3;
+}
+
+.chart-skeleton-bar {
+  background: linear-gradient(
+    90deg,
+    var(--surface2) 25%,
+    var(--surface3) 50%,
+    var(--surface2) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Loaded State */
+canvas {
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+}
+
+canvas.loaded {
+  opacity: 1;
+}
+
+/* Lazy Load Observer Target */
+.chart-observer-target {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  pointer-events: none;
+}

@@ -1,0 +1,110 @@
+/* Badge Styles */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Jira Status Badges */
+.b-open {
+  background: rgba(100, 116, 139, .2);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, .3);
+}
+
+.b-ready {
+  background: rgba(59, 130, 246, .15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, .3);
+}
+
+.b-refining {
+  background: rgba(245, 158, 11, .15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, .3);
+}
+
+.b-inprogress {
+  background: rgba(124, 58, 237, .15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, .3);
+}
+
+.b-qa {
+  background: rgba(6, 182, 212, .15);
+  color: #22d3ee;
+  border: 1px solid rgba(6, 182, 212, .3);
+}
+
+.b-uat {
+  background: rgba(16, 185, 129, .15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, .3);
+}
+
+.b-completed {
+  background: rgba(16, 185, 129, .2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, .4);
+}
+
+.b-cancelled {
+  background: rgba(239, 68, 68, .15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, .3);
+}
+
+.b-review {
+  background: rgba(249, 115, 22, .15);
+  color: #fb923c;
+  border: 1px solid rgba(249, 115, 22, .3);
+}
+
+.b-release {
+  background: rgba(139, 92, 246, .15);
+  color: #c4b5fd;
+  border: 1px solid rgba(139, 92, 246, .3);
+}
+
+/* DevOps Status Badges */
+.b-created {
+  background: rgba(100, 116, 139, .2);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, .3);
+}
+
+.b-deployed {
+  background: rgba(16, 185, 129, .15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, .3);
+}
+
+.b-pr {
+  background: rgba(124, 58, 237, .15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, .3);
+}
+
+/* DevOps ORG Badges */
+.b-int {
+  background: rgba(245, 158, 11, .15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, .3);
+}
+
+.b-uat-org {
+  background: rgba(59, 130, 246, .15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, .3);
+}
+
+.b-prod {
+  background: rgba(239, 68, 68, .15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, .3);
+}

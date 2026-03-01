@@ -1,0 +1,306 @@
+/* Automated Status Updates Styles */
+.status-rule-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+}
+
+.status-rule-item:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.15);
+}
+
+.status-rule-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-rule-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.status-rule-details {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text3);
+  align-items: center;
+}
+
+.status-rule-badge {
+  padding: 3px 8px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.status-rule-badge.condition {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.25);
+}
+
+.status-rule-badge.target {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.status-rule-controls {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.status-rule-toggle {
+  position: relative;
+  width: 40px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.status-rule-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.status-rule-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border);
+  transition: 0.3s;
+  border-radius: 20px;
+}
+
+.status-rule-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.status-rule-toggle input:checked + .status-rule-toggle-slider {
+  background-color: var(--accent4);
+}
+
+.status-rule-toggle input:checked + .status-rule-toggle-slider:before {
+  transform: translateX(20px);
+}
+
+.status-rule-delete-btn {
+  background: var(--accent5);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.status-rule-delete-btn:hover {
+  background: #dc2626;
+  transform: scale(1.05);
+}
+
+.status-rules-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.status-rules-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.status-rules-list::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 4px;
+}
+
+.status-rules-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.status-rules-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.status-add-rule-section {
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.status-add-rule-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.status-rule-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.status-global-toggle {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(6, 182, 212, 0.08));
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.status-global-toggle-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.status-global-toggle-label {
+  flex: 1;
+}
+
+.status-global-toggle-label-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.status-global-toggle-label-desc {
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.5;
+}
+
+.status-execution-log {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-top: 16px;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: monospace;
+  font-size: 11px;
+}
+
+.status-execution-log::-webkit-scrollbar {
+  width: 8px;
+}
+
+.status-execution-log::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.status-execution-log::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.5);
+  border-radius: 4px;
+}
+
+.status-execution-log::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.7);
+}
+
+.status-log-entry {
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(42, 58, 85, 0.3);
+  color: var(--text3);
+}
+
+.status-log-entry:last-child {
+  border-bottom: none;
+}
+
+.status-log-entry.success {
+  color: var(--accent4);
+}
+
+.status-log-entry.error {
+  color: var(--accent5);
+}
+
+.status-log-entry.info {
+  color: var(--accent);
+}
+
+/* Condition and Target Row Styles */
+.condition-row,
+.target-row {
+  position: relative;
+}
+
+.condition-row .form-group,
+.target-row .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.condition-row label,
+.target-row label {
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.condition-row input,
+.condition-row select,
+.target-row input,
+.target-row select {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  transition: border-color 0.2s ease;
+}
+
+.condition-row input:focus,
+.condition-row select:focus,
+.target-row input:focus,
+.target-row select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.condition-row .btn-danger,
+.target-row .btn-danger {
+  margin-bottom: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

@@ -1,0 +1,393 @@
+/* Tags Styling */
+
+/* Tag Management in Configuration */
+.tags-management {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  min-height: 250px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.tags-management::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tags-management::-webkit-scrollbar-track {
+  background: var(--surface2);
+  border-radius: 3px;
+}
+
+.tags-management::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.tags-management::-webkit-scrollbar-thumb:hover {
+  background: var(--text3);
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  font-weight: 500;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+.tag-pill:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tag-pill-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tag-pill-color:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tag-pill-name {
+  color: var(--text);
+  flex: 1;
+  white-space: nowrap;
+}
+
+.tag-pill-count {
+  background: var(--surface3);
+  color: var(--text2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.tag-pill-remove {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.tag-pill-remove:hover {
+  background: var(--danger);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
+.tag-item:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.1);
+}
+
+.tag-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.tag-color-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-color-indicator:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tag-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+
+.tag-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tag Selection in Forms - Compact Inline Style */
+.tags-selection-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.tags-selection-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tag-checkbox-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tag-checkbox-item:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tag-checkbox-item input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.tag-checkbox-item input[type="checkbox"]:checked {
+  accent-color: currentColor;
+}
+
+.tag-checkbox-label {
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}
+
+/* Tag Display in Table */
+.record-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.record-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.record-tag-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Note Tags Display */
+.note-tags-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.note-tag-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+}
+
+/* Color Picker for Tag Management */
+.tag-color-picker-inline {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tag-color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-color-dot:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tag-color-dot.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+}
+
+/* Add New Tag Input */
+.add-tag-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.add-tag-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.add-tag-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.add-tag-color-picker {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.add-tag-color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
+}
+
+.add-tag-color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.add-tag-color-picker::-moz-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.add-tag-color-picker:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+/* Tag Filter Buttons (for Notes) */
+.tag-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-filter-btn {
+  padding: 8px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-filter-btn:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tag-filter-btn.active {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  border-color: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 212, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tags-selection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .tag-checkbox-item {
+    padding: 8px 10px;
+  }
+  
+  .tag-checkbox-label {
+    font-size: 11px;
+  }
+}

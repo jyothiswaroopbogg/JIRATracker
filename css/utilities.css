@@ -1,0 +1,287 @@
+/* Utility Classes */
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-14 {
+  margin-top: 14px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.ml-8 {
+  margin-left: 8px;
+}
+
+.mb-14 {
+  margin-bottom: 14px;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.export-bar {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+/* Additional Margin Utilities */
+.mb-18 {
+  margin-bottom: 18px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mt-14 {
+  margin-top: 14px;
+}
+
+.mt-6 {
+  margin-top: 6px;
+}
+
+/* Gap Utilities */
+.gap-6 {
+  gap: 6px;
+}
+
+.gap-8 {
+  gap: 8px;
+}
+
+.gap-12 {
+  gap: 12px;
+}
+
+.gap-14 {
+  gap: 14px;
+}
+
+/* Display Utilities */
+.d-flex {
+  display: flex;
+}
+
+.d-grid {
+  display: grid;
+}
+
+/* Grid Utilities */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.max-h-400 {
+  max-height: 400px;
+}
+
+.max-h-350 {
+  max-height: 350px;
+}
+
+.max-h-200 {
+  max-height: 200px;
+}
+
+.max-h-150 {
+  max-height: 150px;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+/* Padding Utilities */
+.p-12 {
+  padding: 12px;
+}
+
+.p-14 {
+  padding: 14px;
+}
+
+.p-40 {
+  padding: 40px;
+}
+
+/* Text Utilities */
+.text-center {
+  text-align: center;
+}
+
+.font-size-11 {
+  font-size: 11px;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+.font-size-13 {
+  font-size: 13px;
+}
+
+.font-size-14 {
+  font-size: 14px;
+}
+
+.font-size-16 {
+  font-size: 16px;
+}
+
+.font-weight-600 {
+  font-weight: 600;
+}
+
+.color-text2 {
+  color: var(--text2);
+}
+
+.color-text3 {
+  color: var(--text3);
+}
+
+.color-accent {
+  color: var(--accent);
+}
+
+.line-height-1-5 {
+  line-height: 1.5;
+}
+
+.line-height-1-6 {
+  line-height: 1.6;
+}
+
+.line-height-1-8 {
+  line-height: 1.8;
+}
+
+/* Border Utilities */
+.border-dashed {
+  border: 2px dashed var(--border);
+}
+
+.border-radius {
+  border-radius: var(--radius);
+}
+
+.border-radius-sm {
+  border-radius: var(--radius-sm);
+}
+
+/* Background Utilities */
+.bg-surface2 {
+  background: var(--surface2);
+}
+
+.bg-surface3 {
+  background: var(--surface3);
+}
+
+/* Flex Utilities */
+.flex-1 {
+  flex: 1;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+/* Cursor Utilities */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-label {
+  cursor: pointer;
+}
+
+.file-input-hidden {
+  display: none;
+}
+
+/* Transition Utilities */
+.transition-all {
+  transition: all 0.2s;
+}
+
+/* Position Utilities */
+.position-relative {
+  position: relative;
+}
+
+/* Visibility Utilities */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Toolbar Utilities */
+.filter-toggle-btn {
+  font-size: 11px;
+  padding: 6px 12px;
+}
+
+.table-info-text {
+  font-size: 12px;
+  color: var(--text3);
+}

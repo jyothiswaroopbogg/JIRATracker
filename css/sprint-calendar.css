@@ -1,0 +1,336 @@
+/* Sprint Calendar Styles */
+
+.sprint-calendar-container {
+  margin-top: 20px;
+}
+
+.sprint-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+.sprint-calendar-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sprint-calendar-month {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 200px;
+  text-align: center;
+}
+
+.sprint-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.sprint-calendar-day-header {
+  background: var(--surface2);
+  padding: 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sprint-calendar-day {
+  background: var(--surface);
+  padding: 8px;
+  min-height: 100px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.sprint-calendar-day:hover {
+  background: var(--surface3);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.sprint-calendar-day.other-month {
+  background: rgba(0, 0, 0, 0.2);
+  opacity: 0.5;
+}
+
+.sprint-calendar-day.today {
+  border: 3px solid var(--accent) !important;
+  background: rgba(0, 212, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+}
+
+/* Today's vertical line - only shown in today's cell */
+.sprint-calendar-day.today::before {
+  content: '';
+  position: absolute;
+  left: var(--time-line-position, 50%);
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: none;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+  transition: left 1s ease;
+}
+
+/* Custom time tooltip */
+.time-tooltip {
+  position: fixed;
+  display: none;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.95) 0%, rgba(0, 150, 200, 0.95) 100%);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4), 0 0 20px rgba(0, 212, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+}
+
+.time-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.time-tooltip::before {
+  content: '🕐';
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+.time-tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(0, 150, 200, 0.95);
+}
+
+.sprint-calendar-day.has-sprint {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.sprint-calendar-day.has-sprint:hover {
+  background: rgba(139, 92, 246, 0.25);
+}
+
+.sprint-calendar-day.holiday {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.sprint-calendar-day.holiday:hover {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+.holiday-marker {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 14px;
+  cursor: help;
+}
+
+.btn-group {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  margin: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.sprint-calendar-day-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 6px;
+}
+
+.sprint-calendar-day.today .sprint-calendar-day-number {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sprint-calendar-sprint-badge {
+  font-size: 10px;
+  padding: 3px 6px;
+  background: rgba(139, 92, 246, 0.8);
+  color: white;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  font-weight: 600;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.sprint-calendar-sprint-count {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+.sprint-calendar-legend {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  /* background: var(--surface2);
+  border: 1px solid var(--border); */
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.sprint-calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.sprint-calendar-legend-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 2px solid;
+}
+
+.sprint-calendar-legend-box.today {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--accent);
+}
+
+.sprint-calendar-legend-box.has-sprint {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.sprint-calendar-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.sprint-calendar-stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+}
+
+.sprint-calendar-stat-label {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.sprint-calendar-stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.sprint-calendar-sprint-list {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.sprint-calendar-sprint-list-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.sprint-calendar-sprint-item {
+  padding: 8px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.sprint-calendar-sprint-item:hover {
+  background: var(--surface3);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.sprint-calendar-sprint-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent4);
+}
+
+.sprint-calendar-sprint-dates {
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.sprint-calendar-sprint-story-count {
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 600;
+}

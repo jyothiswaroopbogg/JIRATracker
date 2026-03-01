@@ -1,0 +1,252 @@
+/* Logo Upload Card Styling */
+
+.logo-upload-card {
+  position: relative;
+  overflow: visible;
+}
+
+.logo-upload-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.logo-upload-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  background: var(--surface2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 216px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.upload-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.upload-area:hover::before {
+  left: 100%;
+}
+
+.upload-area:hover {
+  border-color: var(--accent);
+  background: var(--surface3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+}
+
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.upload-area:hover .upload-icon {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.upload-text {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.upload-text strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.logo-preview-section {
+  display: flex;
+  flex-direction: column;
+  animation: fadeInScale 0.3s ease;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.preview-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.preview-container {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 216px;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+}
+
+.preview-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(45deg, var(--surface) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--surface) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--surface) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--surface) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.preview-container img {
+  max-width: 100%;
+  max-height: 140px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.logo-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.logo-actions .btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-actions .btn span {
+  font-size: 16px;
+}
+
+.logo-actions .btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.logo-actions .btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.logo-actions .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.logo-actions .btn:disabled:hover::before {
+  width: 0;
+  height: 0;
+}
+
+.logo-actions .btn-primary:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.logo-actions .btn-danger:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-upload-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .upload-area {
+    padding: 30px 15px;
+  }
+  
+  .upload-icon {
+    font-size: 40px;
+  }
+  
+  .logo-actions {
+    flex-direction: column;
+  }
+  
+  .logo-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Drag and Drop States */
+.upload-area.drag-over {
+  border-color: var(--accent);
+  background: var(--surface3);
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.upload-area.drag-over .upload-icon {
+  transform: scale(1.2);
+  color: var(--accent);
+}

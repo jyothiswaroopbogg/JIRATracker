@@ -1,0 +1,164 @@
+/* Bulk Operations Styles */
+
+#bulkOperationsBar {
+  display: none;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#bulkCountInfo {
+  font-size: 12px;
+  color: var(--text2);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.bulk-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bulk-btn {
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid;
+}
+
+.bulk-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bulk-btn-status {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: #fbbf24;
+}
+
+.bulk-btn-add-tags {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.5);
+  color: var(--accent);
+}
+
+.bulk-btn-remove-tags {
+  background: rgba(100, 116, 139, 0.2);
+  border-color: rgba(100, 116, 139, 0.5);
+  color: #94a3b8;
+}
+
+.bulk-btn-export {
+  background: rgba(52, 211, 153, 0.2);
+  border-color: rgba(52, 211, 153, 0.5);
+  color: #34d399;
+}
+
+.bulk-btn-delete {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+}
+
+.bulk-btn-clear {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text3);
+}
+
+/* Checkbox in table header and rows */
+.bulk-checkbox-cell {
+  width: 40px;
+  text-align: center;
+  padding: 8px !important;
+}
+
+.bulk-checkbox {
+  accent-color: var(--accent);
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+
+.bulk-checkbox:hover {
+  transform: scale(1.1);
+}
+
+/* Modal for bulk operations */
+.bulk-modal-content {
+  margin-bottom: 20px;
+}
+
+.bulk-modal-info {
+  color: var(--text2);
+  font-size: 13px;
+  margin-bottom: 14px;
+  padding: 10px;
+  background: rgba(0, 212, 255, 0.1);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+}
+
+.tag-select-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.tag-select-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.tag-select-item:hover {
+  background: var(--surface3);
+  border-color: var(--accent);
+}
+
+.tag-select-item input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.tag-select-item input[type="checkbox"]:checked + span {
+  font-weight: 600;
+  color: var(--accent);
+}

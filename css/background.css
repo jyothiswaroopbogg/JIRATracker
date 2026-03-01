@@ -1,0 +1,59 @@
+/* Background Layer and Matrix Styles */
+
+/* BACKGROUND IMAGE LAYER */
+#backgroundLayer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity .6s ease;
+  z-index: -2;
+  pointer-events: none;
+}
+
+#backgroundLayer.show {
+  opacity: 1;
+}
+
+#backgroundLayer.matrix {
+  background: none;
+  animation: none;
+}
+
+/* MATRIX BACKGROUND ANIMATION */
+#matrixCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+#matrixCanvas.show {
+  opacity: 0.9;
+}
+
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* COLOR THEME BACKGROUND FALLBACK */
+body.bgBlack {
+  background: var(--bg);
+  background-image: none;
+}

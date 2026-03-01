@@ -1,0 +1,50 @@
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+.pagination-info {
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.pagination-btns {
+  display: flex;
+  gap: 4px;
+}
+
+.page-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  font-family: 'Syne', sans-serif;
+}
+
+.page-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.page-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0e1a;
+  font-weight: 700;
+}
+
+.page-btn:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}

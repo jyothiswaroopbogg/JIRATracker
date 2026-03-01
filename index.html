@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint Tracker Pro — TBCRM3</title>
+<link rel="icon" type="image/svg+xml" id="dynamicFavicon" href="favicon.svg">
+
+<!-- External Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/tabs.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/kpi.css">
+<link rel="stylesheet" href="css/charts.css">
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/tables.css">
+<link rel="stylesheet" href="css/badges.css">
+<link rel="stylesheet" href="css/pagination.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/settings.css">
+<link rel="stylesheet" href="css/progress.css">
+<link rel="stylesheet" href="css/toast.css">
+<link rel="stylesheet" href="css/environment.css">
+<link rel="stylesheet" href="css/notes.css">
+<link rel="stylesheet" href="css/tags.css">
+<link rel="stylesheet" href="css/bulk-operations.css">
+<link rel="stylesheet" href="css/sprint-count.css">
+<link rel="stylesheet" href="css/timestamps.css">
+<link rel="stylesheet" href="css/quick-add.css">
+<link rel="stylesheet" href="css/utilities.css">
+<link rel="stylesheet" href="css/lazy-loading.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/automated-status.css">
+<link rel="stylesheet" href="css/sprint-calendar.css">
+<link rel="stylesheet" href="css/sprint-progress.css">
+<link rel="stylesheet" href="css/sprint-reminders.css">
+<link rel="stylesheet" href="css/logo-upload.css">
+<link rel="stylesheet" href="css/jira.css">
+<link rel="stylesheet" href="css/work-items.css">
+</head>
+<body>
+<div id="backgroundLayer"></div>
+<canvas id="matrixCanvas"></canvas>
+<div class="app">
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">ST</div>
+    <div>
+      <div class="logo-text">Sprint<span>Track</span> Pro</div>
+      <div class="header-meta">TBCRM3 &middot; Salesforce Vlocity Project</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="recordCount" class="record-count">0 records</div>
+    <div class="status-pill"><span class="status-dot"></span>Live</div>
+  </div>
+</header>
+
+<div class="tab-bar">
+  <div class="tab" onclick="switchTab(0)" id="tab0"><span>📊</span>Dashboard</div>
+  <div class="tab" onclick="switchTab(1)" id="tab1"><span>📋</span>Data Entry</div>
+  <div class="tab" onclick="switchTab(2)" id="tab2"><span>📈</span>Detailed Summary</div>
+  <div class="tab" onclick="switchTab(3)" id="tab3"><span>📝</span>Notes</div>
+  <div class="tab" onclick="switchTab(4)" id="tab4"><span>📅</span>Sprint Calendar</div>
+  <div class="tab" onclick="switchTab(5)" id="tab5"><span>🔗</span>JIRA</div>
+  <div class="tab" onclick="switchTab(6)" id="tab6"><span>⚙️</span>Configuration</div>
+</div>
+
+<div class="content">
+
+<!-- ====== TAB 0: DASHBOARD ====== -->
+<div class="tab-panel active" id="panel0">
+  <div class="section-header">
+    <div><div class="section-title">Project <span>Dashboard</span></div><div class="section-sub">Real-time overview of sprint health and progress</div></div>
+  </div>
+  <div class="grid-4">
+    <div class="kpi-card"><div class="kpi-label">Total Stories</div><div class="kpi-value" id="kpi-total">0</div><div class="kpi-delta">All tracked items</div><div class="kpi-icon">📦</div></div>
+    <div class="kpi-card"><div class="kpi-label">Completed</div><div class="kpi-value accent4" id="kpi-completed">0</div><div class="kpi-delta">Closed stories</div><div class="kpi-icon">✅</div></div>
+    <div class="kpi-card"><div class="kpi-label">In Progress</div><div class="kpi-value purple" id="kpi-inprogress">0</div><div class="kpi-delta">Active development</div><div class="kpi-icon">⚡</div></div>
+    <div class="kpi-card"><div class="kpi-label">Deployed PROD</div><div class="kpi-value accent3" id="kpi-prod">0</div><div class="kpi-delta">Production items</div><div class="kpi-icon">🚀</div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card" data-chart-id="jiraStatusChart"><div class="chart-title">Jira Status <span>Distribution</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Breakdown of stories across different Jira statuses. Helps identify bottlenecks in the workflow and track progress through different stages from Open to Completed.</div><canvas id="jiraStatusChart"></canvas></div>
+    <div class="chart-card" data-chart-id="sprintVelocityChart"><div class="chart-title">Sprint <span>Velocity</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Number of stories per sprint. Tracks how work is distributed across sprints and helps forecast sprint capacity and team throughput over time.</div><canvas id="sprintVelocityChart"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card" data-chart-id="devopsChart"><div class="chart-title">DevOps Status <span>Breakdown</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Distribution of stories across DevOps deployment states (Created, Deployed, Pull Request). Indicates how many items are in different stages of the deployment pipeline.</div><canvas id="devopsChart"></canvas></div>
+    <div class="chart-card" data-chart-id="piChart"><div class="chart-title">PI <span>Progress</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Stories per Program Increment (PI). Visualizes workload distribution across different PIs and helps with release planning and program roadmap tracking.</div><canvas id="piChart"></canvas></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card" data-chart-id="deploymentChart"><div class="chart-title">Deployment <span>Pipeline (ORG)</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Stories deployed across different environments (INT, QA, UAT, PROD). Helps track which stories have reached each environment stage and identify production deployment patterns.</div><canvas id="deploymentChart"></canvas></div>
+    <div class="chart-card" data-chart-id="workItemChart"><div class="chart-title">Work Items <span>per Sprint</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Count of linked work items per sprint. Indicates the effort level and complexity of each sprint by showing how many development work items are associated with stories.</div><canvas id="workItemChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ====== TAB 1: DATA ENTRY ====== -->
+<div class="tab-panel" id="panel1">
+  <div class="section-header">
+    <div><div class="section-title">Data <span>Entry</span></div><div class="section-sub">Add and manage sprint stories</div></div>
+    <div class="export-bar">
+      <button class="btn btn-primary" onclick="openRecordColumnSelectModal()">🔍 Select Columns</button>
+      <button class="btn btn-primary" onclick="exportPDF()">&#8595; PDF</button>
+      <button class="btn btn-success" onclick="exportCSV()">&#8595; Export CSV</button>
+      <button class="btn btn-warning" onclick="exportExcel()">&#8595; Export Excel</button>
+      <button class="btn btn-secondary" onclick="openCSVImportModal()">&#8593; Import</button>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="form-section-title" id="formTitle">&#43; Add New Record</div>
+    <div class="form-grid" id="mainFormGrid">
+      <!-- Form fields will be dynamically generated here -->
+    </div>
+    <div id="tagsFormField" class="mt-16"></div>
+    <div class="form-actions">
+      <button class="btn btn-primary" onclick="saveRecord()" id="saveBtn">&#43; Add Record</button>
+      <button class="btn btn-secondary" onclick="clearForm()">&#215; Clear</button>
+    </div>
+  </div>
+
+  <div class="table-controls">
+    <div class="table-left">
+      <label for="searchBox" class="visually-hidden">Search records</label>
+      <input class="search-box" type="text" id="searchBox" name="searchBox" placeholder="Search records..." oninput="searchTable(this.value)">
+      <label for="perPageSelect" class="visually-hidden">Items per page</label>
+      <select class="per-page-select" id="perPageSelect" name="perPageSelect" onchange="changePerPage(this.value)">
+        <option value="5">5 / page</option>
+        <option value="10" selected>10 / page</option>
+        <option value="15">15 / page</option>
+        <option value="20">20 / page</option>
+        <option value="25">25 / page</option>
+      </select>
+    </div>
+    <div class="table-right">
+      <button class="btn btn-secondary btn-sm filter-toggle-btn" onclick="toggleAdvancedFilters()" id="filterToggleBtn">🔽 Advanced Filters</button>
+      <span id="tableInfo" class="table-info-text"></span>
+    </div>
+  </div>
+  
+  <!-- Bulk Operations Bar -->
+  <div id="bulkOperationsBar">
+    <span id="bulkCountInfo">0 records selected</span>
+    <div class="bulk-actions-group">
+      <button class="btn btn-sm bulk-btn bulk-btn-status" onclick="bulkUpdateStatus()">📝 Update Status</button>
+      <button class="btn btn-sm bulk-btn bulk-btn-add-tags" onclick="bulkAddTags()">🏷️ Add Tags</button>
+      <button class="btn btn-sm bulk-btn bulk-btn-remove-tags" onclick="bulkRemoveTags()">🏷️ Remove Tags</button>
+      <button class="btn btn-sm bulk-btn bulk-btn-export" onclick="bulkExportSelected()">📥 Export</button>
+      <button class="btn btn-sm bulk-btn bulk-btn-delete" onclick="bulkDeleteRecords()">🗑 Delete</button>
+      <button class="btn btn-sm bulk-btn bulk-btn-clear" onclick="clearSelections()">✕ Clear</button>
+    </div>
+  </div>
+  
+  <!-- Advanced Filters Panel -->
+  <div id="advancedFiltersPanel" class="advanced-filters-panel hidden">
+    <div class="advanced-filters-grid">
+      <div class="form-group form-group-compact">
+        <label for="f-filter-pi" class="filter-label">PI</label>
+        <select id="f-filter-pi" name="f-filter-pi" onchange="applyAdvancedFilters()" class="filter-select-sm">
+          <option value="">All PIs</option>
+        </select>
+      </div>
+      <div class="form-group form-group-compact">
+        <label for="f-filter-sprint" class="filter-label">Sprint</label>
+        <select id="f-filter-sprint" name="f-filter-sprint" onchange="applyAdvancedFilters()" class="filter-select-sm">
+          <option value="">All Sprints</option>
+        </select>
+      </div>
+      <div class="form-group form-group-compact">
+        <label for="f-filter-jstatus" class="filter-label">Jira Status</label>
+        <select id="f-filter-jstatus" name="f-filter-jstatus" onchange="applyAdvancedFilters()" class="filter-select-sm">
+          <option value="">All Status</option>
+        </select>
+      </div>
+      <div class="form-group form-group-compact">
+        <label for="f-filter-dstatus" class="filter-label">DevOps Status</label>
+        <select id="f-filter-dstatus" name="f-filter-dstatus" onchange="applyAdvancedFilters()" class="filter-select-sm">
+          <option value="">All DevOps</option>
+        </select>
+      </div>
+      <div class="form-group form-group-compact">
+        <label for="f-filter-dorg" class="filter-label">DevOps ORG</label>
+        <select id="f-filter-dorg" name="f-filter-dorg" onchange="applyAdvancedFilters()" class="filter-select-sm">
+          <option value="">All ORGs</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div class="table-wrapper">
+    <table id="dataTable">
+      <thead><tr id="tableHead"></tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <div class="pagination">
+    <div class="pagination-info" id="pageInfo"></div>
+    <div class="pagination-btns" id="pageBtns"></div>
+  </div>
+</div>
+
+<!-- ====== TAB 2: DETAILED SUMMARY ====== -->
+<div class="tab-panel" id="panel2">
+  <div class="section-header">
+    <div><div class="section-title">Detailed <span>Summary</span></div><div class="section-sub">Comprehensive analytics and breakdowns</div></div>
+  </div>
+  <div class="summary-grid" id="summaryStats"></div>
+  <div class="card mt-20">
+    <div class="chart-title">Environment <span>Distribution</span></div>
+    <div class="chart-description"><strong>📊 What it shows:</strong> Shows the breakdown of stories deployed across the three environment tiers: INT (integration environment), UAT (user acceptance testing), and PROD (production). Helps identify deployment readiness and environment progression.</div>
+    <div class="grid-3" id="envDistribution"></div>
+  </div>
+  <div class="grid-2">
+    <div class="card"><div class="chart-title">Jira Status <span>Progress</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Percentage breakdown of stories in each Jira status. Provides detailed visibility into the workflow stages and bottlenecks that may be slowing down delivery.</div><div id="jiraProgressBars"></div></div>
+    <div class="card"><div class="chart-title">DevOps <span>Pipeline</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Percentage of stories in each DevOps state (Created, Deployed, Pull Request). Tracks deployment pipeline health and identifies how many items are waiting for release or in review.</div><div id="devopsProgressBars"></div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-card" data-chart-id="sumSprintChart"><div class="chart-title">Sprint Story <span>Count</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Bar chart showing the number of stories assigned to each sprint. Helps compare sprint capacity and identify which sprints carry the most work.</div><canvas id="sumSprintChart"></canvas></div>
+    <div class="chart-card" data-chart-id="sumPIChart"><div class="chart-title">PI Story <span>Radar</span></div><div class="chart-description"><strong>📊 What it shows:</strong> Radar chart displaying stories across PIs. Visualizes program-level workload distribution and helps with roadmap planning across multiple program increments.</div><canvas id="sumPIChart"></canvas></div>
+  </div>
+  <div class="card mt-20">
+    <div class="chart-title">PI Breakdown <span>Table</span></div>
+    <div class="chart-description"><strong>📊 What it shows:</strong> Detailed table of each PI showing total stories, completed count, in-progress items, pending stories, and completion percentage. Essential for tracking PI-level delivery metrics.</div>
+    <div class="table-wrapper mt-12">
+      <table><thead><tr><th>PI</th><th>Total</th><th>Completed</th><th>In Progress</th><th>Pending</th><th>Completion %</th></tr></thead><tbody id="piBreakdownBody"></tbody></table>
+    </div>
+  </div>
+  <div class="card mt-20">
+    <div class="chart-title">Sprint Breakdown <span>Table</span></div>
+    <div class="chart-description"><strong>📊 What it shows:</strong> Summary table for each sprint showing total items, completed stories, deployed items, and cancelled stories. Helps track sprint health and delivery cadence.</div>
+    <div class="table-wrapper mt-12">
+      <table><thead><tr><th>Sprint</th><th>Total</th><th>Completed</th><th>Deployed</th><th>Cancelled</th></tr></thead><tbody id="sprintBreakdownBody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TAB 3: NOTES ====== -->
+<div class="tab-panel" id="panel3">
+  <div class="section-header">
+    <div><div class="section-title">My <span>Notes</span></div><div class="section-sub">Create and organize sticky notes</div></div>
+    <button class="btn btn-primary" onclick="openNoteModal()">➕ New Note</button>
+  </div>
+  
+  <div class="notes-toolbar">
+    <div class="notes-toolbar-left">
+      <label for="notesSearch" class="visually-hidden">Search notes</label>
+      <input type="text" class="notes-search" id="notesSearch" name="notesSearch" placeholder="🔍 Search notes..." oninput="searchNotes()">
+      <label for="notesPerPage" class="visually-hidden">Notes per page</label>
+      <select class="per-page-select" id="notesPerPage" name="notesPerPage" onchange="changeNotesPerPage()">
+        <option value="5">5 / page</option>
+        <option value="10" selected>10 / page</option>
+        <option value="15">15 / page</option>
+        <option value="20">20 / page</option>
+        <option value="25">25 / page</option>
+      </select>
+    </div>
+    <div class="notes-toolbar-right">
+      <button class="btn btn-secondary btn-sm" onclick="openColumnSelectModal()">🔍 Select Cols</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportNotesTXT()">📄 TXT</button>
+      <button class="btn btn-success btn-sm" onclick="exportNotesPDF()">📕 PDF</button>
+      <button class="btn btn-warning btn-sm" onclick="exportNotesAll()">📦 All</button>
+      <button class="btn btn-secondary btn-sm" onclick="openImportModal()">📤 Import</button>
+    </div>
+  </div>
+
+  <div class="notes-filter-section">
+    <div class="notes-filter-label">Filter by Tags:</div>
+    <div class="tag-filter-group" id="noteTagFilters"></div>
+  </div>
+  
+  <span id="notesCountInfo" class="notes-count-info"></span>
+  
+  <div class="notes-grid" id="notesGrid"></div>
+  
+  <div class="notes-pagination">
+    <div class="notes-pagination-info" id="notePageInfo"></div>
+    <div class="pagination-btns" id="notePageBtns"></div>
+  </div>
+</div>
+
+<!-- ====== TAB 4: SPRINT CALENDAR ====== -->
+<div class="tab-panel" id="panel4">
+  <div class="section-header">
+    <div><div class="section-title">Sprint <span>Calendar</span></div><div class="section-sub">Visual timeline of sprint activities</div></div>
+  </div>
+  
+  <div id="sprintCalendarMainContainer"></div>
+</div>
+
+<!-- ====== TAB 5: JIRA INTEGRATION ====== -->
+<div class="tab-panel" id="panel5">
+  <div class="section-header">
+    <div><div class="section-title">JIRA <span>Integration</span></div><div class="section-sub">Connect and sync with JIRA stories</div></div>
+  </div>
+
+  <div class="jira-modern-container">
+    <!-- Control Panel -->
+    <div class="jira-control-panel">
+      <div class="jira-control-header">
+        <div class="jira-control-title">JIRA Configuration</div>
+        <div class="jira-action-buttons">
+          <button class="jira-btn jira-btn-success" onclick="toggleJiraConnection()" id="jiraTestBtn">🔌 Connect</button>
+          <button class="jira-btn jira-btn-primary" onclick="syncFromJira()" id="jiraSyncBtn">🔄 Sync from JIRA</button>
+        </div>
+      </div>
+      <div class="jira-config-form">
+        <div class="form-group">
+          <label for="jiraUrl">JIRA Instance URL</label>
+          <input type="url" id="jiraUrl" name="jiraUrl" placeholder="https://yourcompany.atlassian.net" value="">
+          <div class="field-hint">Your JIRA cloud instance URL (without trailing slash)</div>
+        </div>
+        <div class="form-group">
+          <label for="jiraEmail">Email Address</label>
+          <input type="email" id="jiraEmail" name="jiraEmail" placeholder="your-email@company.com" value="">
+          <div class="field-hint">Email associated with your JIRA account</div>
+        </div>
+        <div class="form-group">
+          <label for="jiraApiToken">API Token</label>
+          <div class="api-token-wrapper">
+            <input type="password" id="jiraApiToken" name="jiraApiToken" placeholder="Enter your JIRA API token" class="api-token-input">
+            <button type="button" onclick="toggleApiTokenVisibility()" class="api-token-toggle-btn" title="Show/Hide API Token">
+              <span id="jiraTokenToggleIcon">👁️</span>
+            </button>
+          </div>
+          <div class="field-hint">
+            Generate at: <a href="https://id.atlassian.com/manage-profile/security/api-tokens" target="_blank" class="accent-link">Atlassian API Tokens</a>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="jiraProjectKey">Default Project Key</label>
+          <input type="text" id="jiraProjectKey" name="jiraProjectKey" placeholder="TBCRM3" value="">
+          <div class="field-hint">Default JIRA project key for queries</div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" onclick="saveJiraConfig()">💾 Save Configuration</button>
+          <button class="btn btn-secondary" onclick="clearJiraConfig()">🗑️ Clear</button>
+        </div>
+      </div>
+      <div id="jiraConnectionStatus" class="connection-status d-none"></div>
+    </div>
+
+    <!-- Auto-Sync Settings Card -->
+    <div class="auto-sync-container">
+      <div class="auto-sync-title">
+        <span>⏰</span> Auto-Sync Settings
+      </div>
+      
+      <!-- 2-Column Layout -->
+      <div class="auto-sync-grid">
+        
+        <!-- Left Column: Configuration -->
+        <div class="auto-sync-section">
+          <div class="auto-sync-section-title">
+            ⚙️ Configuration
+          </div>
+          
+          <div class="form-group mb-14">
+            <label class="auto-sync-checkbox-label">
+              <input type="checkbox" id="autoSyncEnabled" onchange="toggleAutoSync()" class="auto-sync-checkbox">
+              <span class="auto-sync-label-text">Enable Automatic Sync</span>
+            </label>
+            <div class="field-hint field-hint-indent">Automatically sync JIRA stories at specified intervals</div>
+          </div>
+
+          <div id="autoSyncOptions" class="d-none">
+            <!-- Schedule Mode Selection -->
+            <div class="form-group mb-14">
+              <label for="autoSyncMode">Schedule Mode</label>
+              <select id="autoSyncMode" onchange="toggleAutoSyncMode()" class="schedule-select">
+                <option value="interval" selected>Interval-based (Repeat every X hours)</option>
+                <option value="scheduled">Time-based (Daily/Weekly/Monthly/Yearly)</option>
+              </select>
+              <div class="field-hint">Choose how to schedule automatic syncs</div>
+            </div>
+
+            <!-- Interval-based Options -->
+            <div id="intervalBasedOptions" class="d-block">
+              <div class="form-group mb-14">
+                <label for="autoSyncInterval">Sync Interval</label>
+                <select id="autoSyncInterval" onchange="updateAutoSyncInterval()" class="schedule-select">
+                  <option value="900">Every 15 minutes</option>
+                  <option value="1800">Every 30 minutes</option>
+                  <option value="3600" selected>Every 1 hour</option>
+                  <option value="7200">Every 2 hours</option>
+                  <option value="14400">Every 4 hours</option>
+                  <option value="21600">Every 6 hours</option>
+                  <option value="43200">Every 12 hours</option>
+                  <option value="86400">Every 24 hours</option>
+                </select>
+                <div class="field-hint">How often to sync stories from JIRA</div>
+              </div>
+            </div>
+
+            <!-- Time-based Schedule Options -->
+            <div id="scheduleBasedOptions" class="d-none">
+              <div class="form-group mb-14">
+                <label for="scheduleType">Schedule Type</label>
+                <select id="scheduleType" onchange="updateScheduleType()" class="schedule-select">
+                  <option value="daily" selected>Daily (Every day at specific time)</option>
+                  <option value="weekly">Weekly (Specific day and time)</option>
+                  <option value="monthly">Monthly (Specific date and time)</option>
+                  <option value="yearly">Yearly (Specific month, date, and time)</option>
+                </select>
+                <div class="field-hint">Choose when to run the sync</div>
+              </div>
+
+              <!-- Time Selection (Common for all schedules) -->
+              <div class="form-group mb-14">
+                <label for="scheduleTime">Time</label>
+                <input type="time" id="scheduleTime" onchange="updateScheduleTime()" class="schedule-select">
+                <div class="field-hint">Time of day to run the sync</div>
+              </div>
+
+              <!-- Weekly: Day Selection -->
+              <div id="weeklyOptions" class="form-group mb-14 d-none">
+                <label for="scheduleDayOfWeek">Day of Week</label>
+                <select id="scheduleDayOfWeek" onchange="updateScheduleDayOfWeek()" class="schedule-select">
+                  <option value="0">Sunday</option>
+                  <option value="1" selected>Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                </select>
+                <div class="field-hint">Which day of the week</div>
+              </div>
+
+              <!-- Monthly: Date Selection -->
+              <div id="monthlyOptions" class="form-group mb-14 d-none">
+                <label for="scheduleDayOfMonth">Day of Month</label>
+                <select id="scheduleDayOfMonth" onchange="updateScheduleDayOfMonth()" class="schedule-select">
+                  <option value="1" selected>1st</option>
+                  <option value="2">2nd</option>
+                  <option value="3">3rd</option>
+                  <option value="4">4th</option>
+                  <option value="5">5th</option>
+                  <option value="6">6th</option>
+                  <option value="7">7th</option>
+                  <option value="8">8th</option>
+                  <option value="9">9th</option>
+                  <option value="10">10th</option>
+                  <option value="11">11th</option>
+                  <option value="12">12th</option>
+                  <option value="13">13th</option>
+                  <option value="14">14th</option>
+                  <option value="15">15th</option>
+                  <option value="16">16th</option>
+                  <option value="17">17th</option>
+                  <option value="18">18th</option>
+                  <option value="19">19th</option>
+                  <option value="20">20th</option>
+                  <option value="21">21st</option>
+                  <option value="22">22nd</option>
+                  <option value="23">23rd</option>
+                  <option value="24">24th</option>
+                  <option value="25">25th</option>
+                  <option value="26">26th</option>
+                  <option value="27">27th</option>
+                  <option value="28">28th</option>
+                  <option value="29">29th</option>
+                  <option value="30">30th</option>
+                  <option value="31">31st</option>
+                </select>
+                <div class="field-hint">Which day of the month</div>
+              </div>
+
+              <!-- Yearly: Month and Date Selection -->
+              <div id="yearlyOptions" class="d-none">
+                <div class="form-group mb-14">
+                  <label for="scheduleMonth">Month</label>
+                  <select id="scheduleMonth" onchange="updateScheduleMonth()" class="schedule-select">
+                    <option value="0" selected>January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                  </select>
+                  <div class="field-hint">Which month of the year</div>
+                </div>
+                <div class="form-group mb-14">
+                  <label for="scheduleYearlyDay">Day of Month</label>
+                  <select id="scheduleYearlyDay" onchange="updateScheduleYearlyDay()" class="schedule-select">
+                    <option value="1" selected>1st</option>
+                    <option value="2">2nd</option>
+                    <option value="3">3rd</option>
+                    <option value="4">4th</option>
+                    <option value="5">5th</option>
+                    <option value="6">6th</option>
+                    <option value="7">7th</option>
+                    <option value="8">8th</option>
+                    <option value="9">9th</option>
+                    <option value="10">10th</option>
+                    <option value="11">11th</option>
+                    <option value="12">12th</option>
+                    <option value="13">13th</option>
+                    <option value="14">14th</option>
+                    <option value="15">15th</option>
+                    <option value="16">16th</option>
+                    <option value="17">17th</option>
+                    <option value="18">18th</option>
+                    <option value="19">19th</option>
+                    <option value="20">20th</option>
+                    <option value="21">21st</option>
+                    <option value="22">22nd</option>
+                    <option value="23">23rd</option>
+                    <option value="24">24th</option>
+                    <option value="25">25th</option>
+                    <option value="26">26th</option>
+                    <option value="27">27th</option>
+                    <option value="28">28th</option>
+                    <option value="29">29th</option>
+                    <option value="30">30th</option>
+                    <option value="31">31st</option>
+                  </select>
+                  <div class="field-hint">Which day of that month</div>
+                </div>
+              </div>
+
+              <!-- Schedule Preview -->
+              <div id="schedulePreview" class="schedule-preview mb-14 d-none">
+                <strong>📅 Schedule:</strong> <span id="schedulePreviewText"></span>
+              </div>
+            </div>
+
+            <div class="auto-sync-info-box">
+              <div class="mb-14"><strong>Last Run:</strong> <span id="autoSyncLastRun">Never</span></div>
+              <div><strong>Next Run:</strong> <span id="autoSyncNextRun">Not scheduled</span></div>
+            </div>
+
+            <div class="form-actions mt-14">
+              <button class="btn btn-success" onclick="saveAutoSyncSettings()">💾 Save Auto-Sync Settings</button>
+              <button class="btn btn-primary ml-8" onclick="runAutoSyncNow()">▶ Run Now</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Column: Sync Run History -->
+        <div class="auto-sync-section">
+          <div class="auto-sync-section-title">
+            <span>📊 Sync Run History</span>
+            <button class="btn btn-xs btn-secondary" onclick="refreshSyncRuns()">🔄 Refresh</button>
+          </div>
+          
+          <div id="syncRunsContainer" class="sync-runs-container">
+            <div id="syncRunsLoading" class="sync-status-loading">
+              <div class="sync-status-emoji">⏳</div>
+              Loading sync history...
+            </div>
+            
+            <div id="syncRunsTable" class="d-none">
+              <div class="sync-runs-container-scroll">
+                <table class="sync-runs-table">
+                  <thead>
+                    <tr>
+                      <th class="sync-table-col-30">Date/Time</th>
+                      <th class="sync-table-col-15">Type</th>
+                      <th class="sync-table-col-15">Count</th>
+                      <th class="sync-table-col-40">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="syncRunsTableBody">
+                    <!-- Populated by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div id="syncRunsEmpty" class="sync-status-empty d-none">
+              <div class="sync-status-emoji">📝</div>
+              No sync runs yet
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- JQL Query Section (Collapsible) -->
+    <div class="jql-container">
+      <div class="jql-header">
+        <span class="jql-title">🔍 Custom JQL Query</span>
+        <button class="btn btn-xs btn-secondary" onclick="toggleJqlHelp()">? Help</button>
+      </div>
+      <textarea id="jiraJqlInput" rows="2" placeholder="project = &quot;Team - Broker CRM3&quot; AND status = &quot;In Progress&quot; ORDER BY updated DESC" class="jql-textarea"></textarea>
+      <button class="jira-btn jira-btn-primary jql-execute-btn" onclick="executeJqlQuery()">▶ Execute Query</button>
+      <div id="jqlHelpBox" class="jql-help-box d-none mt-12">
+        <div class="jql-help-title">JQL Query Examples:</div>
+        <ul class="jql-examples-list">
+          <li class="jql-example-item"><code>project = "Team - Broker CRM3" ORDER BY created DESC</code></li>
+          <li class="jql-example-item"><code>assignee = currentUser() AND status != Done</code></li>
+          <li class="jql-example-item"><code>text ~ "search term" ORDER BY updated DESC</code></li>
+          <li><code>created >= -7d AND project = "Team - Broker CRM3"</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="jira-stats-bar">
+      <div class="jira-stat-card">
+        <div class="jira-stat-value" id="jiraStatTotal">0</div>
+        <div class="jira-stat-label">Total Stories</div>
+      </div>
+      <div class="jira-stat-card">
+        <div class="jira-stat-value" id="jiraStatSynced">0</div>
+        <div class="jira-stat-label">Synced</div>
+      </div>
+      <div class="jira-stat-card">
+        <div class="jira-stat-value" id="jiraStatPending">0</div>
+        <div class="jira-stat-label">Pending</div>
+      </div>
+      <div class="jira-stat-card">
+        <div class="jira-stat-value" id="jiraStatAutoSync">OFF</div>
+        <div class="jira-stat-label">Auto-Sync</div>
+      </div>
+    </div>
+
+    <!-- Person Filter Section -->
+    <div class="jira-person-filter">
+      <div class="person-filter-header">
+        <div class="person-filter-title">Filter by Person</div>
+        <div class="person-filter-controls">
+          <div class="person-input-group">
+            <input type="text" id="jiraPersonInput" placeholder="Enter person name..." onkeypress="if(event.key==='Enter') addPersonToFilter()">
+            <button onclick="addPersonToFilter()">+ Add</button>
+          </div>
+          <button class="jira-btn jira-btn-warning jira-btn-padding-sm" onclick="clearPersonsFilter()">Clear All</button>
+        </div>
+      </div>
+      <div class="selected-persons" id="selectedPersonsContainer">
+        <div class="person-empty-state">No person filter active</div>
+      </div>
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="jira-search-filter-bar">
+      <input type="text" id="jiraSearchInput" placeholder="🔍 Search JIRA stories..." oninput="searchJiraIssues(this.value)">
+      <select id="jiraFilterStatus" onchange="filterJiraIssues()">
+        <option value="">All Statuses</option>
+        <!-- Populated dynamically from JIRA stories -->
+      </select>
+      <select id="jiraFilterPI" onchange="onPIFilterChange()">
+        <option value="">All PIs</option>
+      </select>
+      <select id="jiraFilterQuarter" onchange="filterJiraIssues()">
+        <option value="">All Quarters</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <select id="jiraFilterSprint" onchange="filterJiraIssues()">
+        <option value="">All Sprints</option>
+      </select>
+      <button class="jira-btn jira-btn-success jira-btn-padding-md" onclick="syncFromJira()" id="jiraSyncFilterBtn">🔄 Sync</button>
+    </div>
+
+    <!-- Stories Table -->
+    <div>
+      <div class="jira-issues-header">
+        <div id="jiraIssuesCount" class="jira-issues-count">No stories loaded</div>
+        <div class="jira-pagination-controls">
+          <button class="btn btn-sm" onclick="jiraPrevPage()" id="jiraPrevBtn" disabled>← Previous</button>
+          <span id="jiraPageInfo" class="jira-page-info">Page 1</span>
+          <button class="btn btn-sm" onclick="jiraNextPage()" id="jiraNextBtn" disabled>Next →</button>
+        </div>
+      </div>
+      <div class="jira-table-wrapper" id="jiraIssuesList">
+        <!-- Table will be rendered here -->
+        <div class="jira-empty-state">
+          <div class="jira-empty-icon">📋</div>
+          <div class="jira-empty-text">No stories loaded</div>
+          <div class="jira-empty-subtext">Click "Sync from JIRA" to load stories</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Field Mapping Section - Redesigned with Left/Right Split -->
+    <div class="field-mapping-container">
+      <div class="field-mapping-title">
+        <span>🔗</span> Field Mapping
+      </div>
+      
+      <!-- 2-Column Layout -->
+      <div class="field-mapping-grid">
+        
+        <!-- Left Column: Add New Mapping -->
+        <div class="field-mapping-section">
+          <div class="field-mapping-section-title">
+            ➕ Add New Mapping
+          </div>
+          
+          <div class="form-group mb-14">
+            <label for="mappingLocalField">Local Database Field</label>
+            <input type="text" 
+                   id="mappingLocalField" 
+                   placeholder="e.g., jira, desc, jstatus"
+                   list="localFieldSuggestions"
+                   class="field-input-mono">
+            <datalist id="localFieldSuggestions">
+              <option value="jira">jira - Story Key</option>
+              <option value="desc">desc - Description</option>
+              <option value="jstatus">jstatus - JIRA Status</option>
+              <option value="pi">pi - Person/PI</option>
+              <option value="sprint_start">sprint_start - Sprint Start</option>
+              <option value="sprint_end">sprint_end - Sprint End</option>
+              <option value="wi1">wi1 - Work Item 1 (SC)</option>
+              <option value="wi2">wi2 - Work Item 2 (VC)</option>
+              <option value="dstatus">dstatus - DevOps Status</option>
+              <option value="dorg">dorg - DevOps Organization</option>
+              <option value="comments">comments - Comments</option>
+              <option value="tags">tags - Tags/Labels</option>
+            </datalist>
+            <div class="field-hint">The column name in your local database</div>
+          </div>
+
+          <div class="form-group mb-14">
+            <label for="mappingJiraField">JIRA Field</label>
+            <select id="mappingJiraField" 
+                    onchange="onJiraFieldSelected()"
+                    class="schedule-select">
+              <option value="">Select JIRA field...</option>
+            </select>
+            <div class="field-hint">The corresponding field from JIRA</div>
+          </div>
+          
+          <div class="field-tip-box">
+            <strong>💡 Tip:</strong> Field mappings are used when importing JIRA stories to your local database. They define how JIRA fields map to your database columns.
+            
+            <!-- JIRA Field Examples in 2 Columns -->
+            <div class="field-examples-grid">
+              <div class="field-examples-title">📋 Common JIRA Fields (with examples):</div>
+              <div class="field-examples-list">
+                <div>• summary: "Fix login bug"</div>
+                <div>• description: "Story details..."</div>
+                <div>• status: "In Progress"</div>
+                <div>• priority: "High"</div>
+                <div>• assignee: "John Doe"</div>
+                <div>• reporter: "Jane Smith"</div>
+                <div>• created: "2026-02-15"</div>
+                <div>• updated: "2026-03-01"</div>
+                <div>• duedate: "2026-03-15"</div>
+                <div>• labels: ["bug", "ui"]</div>
+                <div>• sprint: "261Sprint5-CRM3"</div>
+                <div>• pi: "26"</div>
+                <div>• quarter: "1"</div>
+                <div>• sprint_number: "5"</div>
+                <div>• storyPoints: 5</div>
+                <div>• issueType: "Story"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions d-flex gap-8">
+            <button class="btn btn-success flex-1" onclick="saveFieldMapping()">💾 Save Mapping</button>
+            <button class="btn btn-secondary flex-1" onclick="clearMappingForm()">✖ Clear</button>
+          </div>
+        </div>
+        
+        <!-- Right Column: Current Mappings -->
+        <div class="field-mapping-section">
+          <div class="field-mapping-section-title">
+            <span>📋 Current Mappings (<span id="jiraMappingCount">0</span>)</span>
+            <button class="btn btn-xs btn-secondary" onclick="renderFieldMappings()">🔄 Refresh</button>
+          </div>
+          
+          <div id="jiraFieldMappingList" class="field-mapping-scroll">
+            <!-- Field mappings will be rendered here -->
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Legacy elements (hidden) for backward compatibility -->
+    <div class="d-none">
+      <select id="logFilterType"></select>
+      <select id="logFilterStatus"></select>
+      <textarea id="importJiraKeys"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TAB 6: CONFIGURATION ====== -->
+<div class="tab-panel" id="panel6">
+  <div class="section-header">
+    <div><div class="section-title">System <span>Configuration</span></div><div class="section-sub">Customize all aspects dynamically</div></div>
+    <div class="export-bar">
+      <button class="btn btn-info" onclick="openStorageInfoModal()">💾 Storage Info</button>
+      <button class="btn btn-primary" onclick="exportPDF()">&#8595; PDF</button>
+      <button class="btn btn-success" onclick="exportCSV()">&#8595; CSV</button>
+      <button class="btn btn-warning" onclick="exportExcel()">&#8595; Excel</button>
+      <label class="btn btn-secondary cursor-label" for="importFile2">&#8593; Import</label>
+      <input type="file" id="importFile2" name="importFile2" accept=".csv" class="file-input-hidden" onchange="importFile(event)">
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    <div class="setting-card">
+      <div class="setting-card-title">🎨 Color Theme</div>
+      
+      <!-- Theme Selector -->
+      <div class="theme-selector-box">
+        <label for="themeSelector" class="theme-selector-label">Select Pre-defined Theme</label>
+        <select id="themeSelector" name="themeSelector" onchange="applyTheme(this.value)" class="theme-selector">
+          <option value="default">Default (Dark Blue)</option>
+          <option value="midnight">Midnight (Pure Black)</option>
+          <option value="forest">Forest (Green Nature)</option>
+          <option value="ocean">Ocean (Blue Aquatic)</option>
+          <option value="crimson">Crimson (Red Dark)</option>
+          <option value="light">Light (Bright)</option>
+        </select>
+        <div class="theme-hint">💡 Themes loaded from database • Customizations saved automatically</div>
+      </div>
+      
+      <!-- Scrollable Color Box -->
+      <div class="color-scroll-box">
+        <!-- Backgrounds Section -->
+        <div class="color-section-label">BACKGROUNDS</div>
+        <div class="color-item">
+          <label for="clr-bg" class="color-item-label">Main Background</label>
+          <div class="color-item-controls">
+            <input type="color" value="#0a0e1a" onchange="setCSSVar('--bg',this.value,this)" id="clr-bg" name="clr-bg">
+            <span class="color-hex" id="hex-bg">#0a0e1a</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-surface" class="color-item-label">Card/Panel Surface</label>
+          <div class="color-item-controls">
+            <input type="color" value="#111827" onchange="setCSSVar('--surface',this.value,this)" id="clr-surface" name="clr-surface">
+            <span class="color-hex" id="hex-surface">#111827</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-surface2" class="color-item-label">Input Background</label>
+          <div class="color-item-controls">
+            <input type="color" value="#1a2236" onchange="setCSSVar('--surface2',this.value,this)" id="clr-surface2" name="clr-surface2">
+            <span class="color-hex" id="hex-surface2">#1a2236</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-surface3" class="color-item-label">Hover State</label>
+          <div class="color-item-controls">
+            <input type="color" value="#202d42" onchange="setCSSVar('--surface3',this.value,this)" id="clr-surface3" name="clr-surface3">
+            <span class="color-hex" id="hex-surface3">#202d42</span>
+          </div>
+        </div>
+        
+        <!-- Text & Borders Section -->
+        <div class="color-section-label">TEXT & BORDERS</div>
+        <div class="color-item">
+          <label for="clr-text" class="color-item-label">Primary Text</label>
+          <div class="color-item-controls">
+            <input type="color" value="#e2e8f0" onchange="setCSSVar('--text',this.value,this)" id="clr-text" name="clr-text">
+            <span class="color-hex" id="hex-text">#e2e8f0</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-text2" class="color-item-label">Secondary Text</label>
+          <div class="color-item-controls">
+            <input type="color" value="#94a3b8" onchange="setCSSVar('--text2',this.value,this)" id="clr-text2" name="clr-text2">
+            <span class="color-hex" id="hex-text2">#94a3b8</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-text3" class="color-item-label">Muted Text</label>
+          <div class="color-item-controls">
+            <input type="color" value="#64748b" onchange="setCSSVar('--text3',this.value,this)" id="clr-text3" name="clr-text3">
+            <span class="color-hex" id="hex-text3">#64748b</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-border" class="color-item-label">Border Color</label>
+          <div class="color-item-controls">
+            <input type="color" value="#2a3a55" onchange="setCSSVar('--border',this.value,this)" id="clr-border" name="clr-border">
+            <span class="color-hex" id="hex-border">#2a3a55</span>
+          </div>
+        </div>
+        
+        <!-- Accent Colors Section -->
+        <div class="color-section-label">ACCENT COLORS</div>
+        <div class="color-item">
+          <label for="clr-accent" class="color-item-label">Primary (Cyan)</label>
+          <div class="color-item-controls">
+            <input type="color" value="#00d4ff" onchange="setCSSVar('--accent',this.value,this)" id="clr-accent" name="clr-accent">
+            <span class="color-hex" id="hex-accent">#00d4ff</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-accent2" class="color-item-label">Secondary (Purple)</label>
+          <div class="color-item-controls">
+            <input type="color" value="#7c3aed" onchange="setCSSVar('--accent2',this.value,this)" id="clr-accent2" name="clr-accent2">
+            <span class="color-hex" id="hex-accent2">#7c3aed</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-amber" class="color-item-label">Amber (Warning)</label>
+          <div class="color-item-controls">
+            <input type="color" value="#f59e0b" onchange="setCSSVar('--accent3',this.value,this)" id="clr-amber" name="clr-amber">
+            <span class="color-hex" id="hex-amber">#f59e0b</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-green" class="color-item-label">Green (Success)</label>
+          <div class="color-item-controls">
+            <input type="color" value="#10b981" onchange="setCSSVar('--accent4',this.value,this)" id="clr-green" name="clr-green">
+            <span class="color-hex" id="hex-green">#10b981</span>
+          </div>
+        </div>
+        <div class="color-item">
+          <label for="clr-error" class="color-item-label">Red (Error)</label>
+          <div class="color-item-controls">
+            <input type="color" value="#ef4444" onchange="setCSSVar('--accent5',this.value,this)" id="clr-error" name="clr-error">
+            <span class="color-hex" id="hex-error">#ef4444</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-12 d-flex gap-8 flex-wrap">
+        <button class="btn btn-primary btn-sm" onclick="saveCurrentTheme()">💾 Save Custom Theme</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetColors()">🔄 Reset to Default</button>
+      </div>
+      <div class="setting-hint-center">
+        Custom colors are saved to database as 'current' theme
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128309; Jira Status Options</div>
+      <div class="tag-list" id="jiraStatusTags"></div>
+      <div class="tag-add mt-12">
+        <label for="newJiraStatus" class="visually-hidden">New Jira Status</label>
+        <input type="text" id="newJiraStatus" name="newJiraStatus" placeholder="Add new status...">
+        <button class="btn btn-primary btn-sm" onclick="addPicklistItem('jiraStatuses','jiraStatusTags','newJiraStatus')">+ Add</button>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128296; DevOps Status Options</div>
+      <div class="tag-list" id="devopsStatusTags"></div>
+      <div class="tag-add mt-12">
+        <label for="newDevopsStatus" class="visually-hidden">New DevOps Status</label>
+        <input type="text" id="newDevopsStatus" name="newDevopsStatus" placeholder="Add new status...">
+        <button class="btn btn-primary btn-sm" onclick="addPicklistItem('devopsStatuses','devopsStatusTags','newDevopsStatus')">+ Add</button>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#127970; DevOps ORG Options</div>
+      <div class="tag-list" id="devopsOrgTags"></div>
+      <div class="tag-add mt-12">
+        <label for="newDevopsOrg" class="visually-hidden">New DevOps ORG</label>
+        <input type="text" id="newDevopsOrg" name="newDevopsOrg" placeholder="Add new org...">
+        <button class="btn btn-primary btn-sm" onclick="addPicklistItem('devopsOrgs','devopsOrgTags','newDevopsOrg')">+ Add</button>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#127991; Tags Management</div>
+      <div class="setting-description">
+        Create and manage tags for records and notes. Tags help categorize and organize your work items.
+      </div>
+      <div id="tagsManagementContainer"></div>
+      <div class="add-tag-container mt-16">
+        <label for="newTagName" class="visually-hidden">New Tag Name</label>
+        <input type="text" 
+               id="newTagName" 
+               class="add-tag-input" 
+               placeholder="Enter tag name..."
+               onkeypress="if(event.key==='Enter') addNewTag()">
+        <label for="newTagColor" class="visually-hidden">Tag Color</label>
+        <input type="color" 
+               id="newTagColor" 
+               class="add-tag-color-picker" 
+               value="#94a3b8"
+               title="Choose tag color">
+        <button class="btn btn-primary btn-sm" onclick="addNewTag()">+ Add Tag</button>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">🎯 Sprint Colors Management</div>
+      <div class="setting-description">
+        Manage unique colors for each sprint. These colors are displayed across Sprint Calendar, Progress Dashboard, and All PI Table.
+      </div>
+      <div id="sprintColorsManagementContainer"></div>
+      <div class="add-tag-container mt-16">
+        <label for="newSprintName" class="visually-hidden">New Sprint Name</label>
+        <input type="text" 
+               id="newSprintName" 
+               class="add-tag-input" 
+               placeholder="Sprint name (e.g., 1, 2, 3)..."
+               onkeypress="if(event.key==='Enter') addNewSprintColor()">
+        <label for="newSprintColor" class="visually-hidden">Sprint Color</label>
+        <input type="color" 
+               id="newSprintColor" 
+               class="add-tag-color-picker" 
+               value="#8b5cf6"
+               title="Choose sprint color">
+        <button class="btn btn-primary btn-sm" onclick="addNewSprintColor()">+ Add Sprint Color</button>
+      </div>
+      <!-- <div style="font-size:11px;color:var(--accent4);margin-top:12px;padding:10px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:var(--radius-sm);">
+💡 <strong>Tip:</strong> Click the color square to change a sprint's color. Changes are automatically synced across all tabs.
+      </div> -->
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128279; Hyperlink Templates</div>
+      <div class="form-group mb-14"><label for="jiraUrlTemplate">Jira URL Template (use {formatted})</label><input type="text" id="jiraUrlTemplate" name="jiraUrlTemplate" value="https://sentara.atlassian.net/browser/{formatted}"></div>
+      <div class="form-group mb-14"><label for="jiraDisplayFormat">Jira Display Format ({number} = story number)</label><input type="text" id="jiraDisplayFormat" name="jiraDisplayFormat" value="TBCRM3-{number}"></div>
+      <div class="form-group mb-14"><label for="wiUrlTemplate">Work Item URL Template (use {formatted})</label><input type="text" id="wiUrlTemplate" name="wiUrlTemplate" value="https://github.com/sentara-health/Salesforce-SentaraHealth-Vlocity/tree/{formatted}"></div>
+      <div class="form-group mb-14"><label for="wiDisplayFormat">Work Item Display Format ({number6} = 6-digit padded)</label><input type="text" id="wiDisplayFormat" name="wiDisplayFormat" value="WI-{number6}"></div>
+      <button class="btn btn-primary btn-sm" onclick="saveHyperlinkSettings()">&#128190; Save</button>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#127912; Branding & Labels</div>
+      <div class="form-group mb-14"><label for="lbl-pageTitle">Page Title (Browser Tab)</label><input type="text" id="lbl-pageTitle" name="lbl-pageTitle" placeholder="Sprint Tracker Pro — TBCRM3"></div>
+      <div class="form-group mb-14"><label for="lbl-logoText">Logo Text (Part 1)</label><input type="text" id="lbl-logoText" name="lbl-logoText" placeholder="Sprint"></div>
+      <div class="form-group mb-14"><label for="lbl-logoTextHighlight">Logo Text Highlight (Part 2 - Colored)</label><input type="text" id="lbl-logoTextHighlight" name="lbl-logoTextHighlight" placeholder="Track"></div>
+      <div class="form-group mb-14"><label for="lbl-logoTextEnd">Logo Text End (Part 3)</label><input type="text" id="lbl-logoTextEnd" name="lbl-logoTextEnd" placeholder="Pro"></div>
+      <div class="form-group mb-14"><label for="lbl-headerMeta">Header Metadata</label><input type="text" id="lbl-headerMeta" name="lbl-headerMeta" placeholder="TBCRM3 · Salesforce Vlocity Project"></div>
+      <div class="form-group mb-14"><label for="lbl-appName">Application Name</label><input type="text" id="lbl-appName" name="lbl-appName" placeholder="Sprint Track Pro"></div>
+      <button class="btn btn-primary btn-sm" onclick="saveBrandingLabels()">&#128190; Save</button>
+    </div>
+
+    <div class="setting-card logo-upload-card">
+      <div class="setting-card-title">&#128444; Website Logo</div>
+      <div class="logo-upload-container">
+        <div class="logo-upload-section">
+          <div class="preview-label">Upload</div>
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('logoUpload').click()">
+            <div class="upload-icon">&#128247;</div>
+            <div class="upload-text">
+              <strong>Click to upload</strong> or drag and drop
+            </div>
+            <div class="upload-hint">PNG, JPEG, JPG, ICO (Max 2MB)</div>
+          </div>
+          <input type="file" id="logoUpload" accept=".png,.jpg,.jpeg,.ico" class="file-input-hidden" onchange="handleLogoUpload(event)">
+        </div>
+        
+        <div class="logo-preview-section d-none" id="logoPreviewSection">
+          <div class="preview-label">Preview</div>
+          <div class="preview-container">
+            <img id="logoPreviewImage" src="" alt="Logo Preview">
+          </div>
+        </div>
+      </div>
+      
+      <div class="logo-actions">
+        <button class="btn btn-primary" onclick="saveLogoUpload()" id="saveLogoBtn" disabled>
+          <span>&#128190;</span> Save Logo
+        </button>
+        <button class="btn btn-danger d-none" onclick="removeLogo()" id="removeLogoBtn">
+          <span>&#128465;</span> Remove Logo
+        </button>
+      </div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128209; Tab Labels</div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabDashboard">Dashboard Tab</label>
+        <input type="text" id="lbl-tabDashboard" name="lbl-tabDashboard" placeholder="📊 Dashboard" oninput="updateTabLabel(0, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabDataEntry">Data Entry Tab</label>
+        <input type="text" id="lbl-tabDataEntry" name="lbl-tabDataEntry" placeholder="📋 Data Entry" oninput="updateTabLabel(1, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabSummary">Detailed Summary Tab</label>
+        <input type="text" id="lbl-tabSummary" name="lbl-tabSummary" placeholder="📈 Detailed Summary" oninput="updateTabLabel(2, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabNotes">Notes Tab</label>
+        <input type="text" id="lbl-tabNotes" name="lbl-tabNotes" placeholder="📝 Notes" oninput="updateTabLabel(3, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabSprintCalendar">Sprint Calendar Tab</label>
+        <input type="text" id="lbl-tabSprintCalendar" name="lbl-tabSprintCalendar" placeholder="📅 Sprint Calendar" oninput="updateTabLabel(4, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabJira">JIRA Tab</label>
+        <input type="text" id="lbl-tabJira" name="lbl-tabJira" placeholder="🔗 JIRA" oninput="updateTabLabel(5, this.value)">
+      </div>
+      <div class="form-group mb-14">
+        <label for="lbl-tabConfig">Configuration Tab</label>
+        <input type="text" id="lbl-tabConfig" name="lbl-tabConfig" placeholder="⚙️ Configuration" oninput="updateTabLabel(6, this.value)">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveTabLabels()">&#128190; Save Tab Labels</button>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128065; Column Visibility</div>
+      <div id="columnToggles"></div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#43; Custom Columns</div>
+      <div class="form-group mb-14"><label for="newColName">Column Name</label><input type="text" id="newColName" name="newColName" placeholder="e.g. Environment"></div>
+      <div class="form-group mb-14"><label for="newColType">Column Type</label><select id="newColType" name="newColType" onchange="onColumnTypeChange(this.value)"><option value="text">Text</option><option value="longtext">Long Text</option><option value="date">Date</option><option value="number">Number</option><option value="url">URL</option><option value="email">Email</option><option value="select">Dropdown</option></select></div>
+      <div id="customColumnSettings"></div>
+      <button class="btn btn-primary btn-sm" onclick="addCustomColumn()">+ Add Column</button>
+      <div id="customColList" class="mt-12"></div>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128292; Font & Typography</div>
+      <div class="form-group mb-14">
+        <label for="logoIcon">Logo Icon (2 characters max)</label>
+        <input type="text" id="logoIcon" name="logoIcon" placeholder="ST" maxlength="2">
+      </div>
+      <div class="form-group mb-14">
+        <div class="setting-label-sm">Font Family</div>
+        <div class="custom-dropdown" id="fontFamilyDropdown" role="combobox" aria-label="Select font family">
+          <div class="custom-dropdown-selected" onclick="toggleFontDropdown()">
+            <span class="custom-dropdown-value" id="fontFamilyValue">DM Sans</span>
+            <span class="custom-dropdown-arrow">▼</span>
+          </div>
+          <div class="custom-dropdown-options" id="fontFamilyOptions" role="listbox">
+            <!-- Options populated from database -->
+          </div>
+        </div>
+        <input type="hidden" id="fontFamily" name="fontFamily" value="DM Sans">
+      </div>
+      <div class="form-group mb-14">
+        <label for="baseFontSize">Base Font Size (px)</label>
+        <input type="number" id="baseFontSize" name="baseFontSize" value="13" min="10" max="20" step="1">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveFontSettings()">&#128190; Save Font Settings</button>
+      <button class="btn btn-secondary btn-sm" onclick="resetFontSettings()">&#8635; Reset Fonts</button>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128190; Download Filename Settings</div>
+      <div class="form-group mb-14">
+        <label for="downloadFilename">Export Filename (without extension)</label>
+        <input type="text" id="downloadFilename" name="downloadFilename" placeholder="sprint-tracker">
+        <div class="filename-info-note">&#128204; Used for PDF, Excel & CSV downloads &middot; Extensions added automatically</div>
+      </div>
+      <div class="form-group mb-14">
+        <label for="timestampFormat">Timestamp Format</label>
+        <select id="timestampFormat" name="timestampFormat" onchange="updateTimestampPreview()">
+          <option value="datetime">Date & Time (2026-02-21T14-30-45)</option>
+          <option value="date">Date Only (2026-02-21)</option>
+          <option value="datetime-underscore">Date & Time with _ (2026-02-21_14-30-45)</option>
+          <option value="compact">Compact (20260221-143045)</option>
+          <option value="none">No Timestamp</option>
+        </select>
+        <div id="timestampPreview" class="timestamp-preview">
+          Preview: <strong>sprint-tracker_2026-02-21T14-30-45.csv</strong>
+        </div>
+      </div>
+      <div class="filename-examples-box">
+        <div class="filename-examples-text">
+          <strong>Examples:</strong><br>
+          &#128196; <span class="filename-example-path">sprint-tracker</span> &rarr; sprint-tracker.pdf<br>
+          &#128196; <span class="filename-example-path">my-project-data</span> &rarr; my-project-data.csv<br>
+          &#128196; <span class="filename-example-path">TBCRM3-export</span> &rarr; TBCRM3-export.xlsx
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm mt-12" onclick="saveDownloadFilename()">&#128190; Save Filename</button>
+    </div>
+
+    <div class="setting-card">
+      <div class="setting-card-title">&#128274; JIRA IP Whitelist Security</div>
+      <div class="ip-description">
+        Control which IP addresses can access JIRA integration endpoints. Only whitelisted IPs can sync with JIRA.
+      </div>
+      
+      <!-- Enable/Disable IP Whitelist -->
+      <div class="ip-whitelist-enable-box">
+        <label class="ip-checkbox-label" for="ipWhitelistEnabled">
+          <input type="checkbox" id="ipWhitelistEnabled" name="ipWhitelistEnabled" onchange="toggleIPWhitelist()" class="ip-checkbox">
+          <span class="ip-label-text">Enable IP Whitelist Protection</span>
+        </label>
+        <div class="ip-hint-text">
+          💡 When enabled, only whitelisted IP addresses can access JIRA endpoints
+        </div>
+      </div>
+
+      <!-- Whitelist Status -->
+      <div id="ipWhitelistStatus" class="ip-status-container">
+        <div class="ip-status-title">📊 Whitelist Status</div>
+        <div class="ip-status-row">
+          <span class="ip-status-label">Your Current IP:</span>
+          <span id="currentIPAddress" class="ip-status-value accent">Loading...</span>
+        </div>
+        <div class="ip-status-row">
+          <span class="ip-status-label">Total Whitelisted IPs:</span>
+          <span id="whitelistCount" class="ip-status-value success">0</span>
+        </div>
+        <div class="ip-status-row">
+          <span class="ip-status-label">Access Status:</span>
+          <span id="accessStatus" class="ip-status-value">✅ Allowed</span>
+        </div>
+      </div>
+
+      <!-- IP List -->
+      <div class="ip-list-container">
+        <div class="ip-status-title">📋 Whitelisted IP Addresses</div>
+        <div id="ipWhitelistContainer">
+          <!-- IP list will be populated here -->
+        </div>
+      </div>
+
+      <!-- Add New IP -->
+      <div class="tag-add">
+        <label for="newIPAddress" class="d-none">New IP Address</label>
+        <input type="text" id="newIPAddress" name="newIPAddress" placeholder="Enter IP address (e.g., 192.168.1.100 or 192.168.1.*)" class="flex-1">
+        <button class="btn btn-primary btn-sm" onclick="addIPToWhitelist()">+ Add IP</button>
+      </div>
+      
+      <div class="ip-security-note">
+        ⚠️ <strong>Security Note:</strong> Localhost IPs (127.0.0.1, ::1) are automatically allowed. Use wildcards for ranges (e.g., 192.168.1.*).
+      </div>
+    </div>
+  </div>
+
+  <!-- Background & Matrix Settings Section -->
+  <div class="settings-grid settings-section-divider">
+    <div id="backgroundSettingsContainer"></div>
+    <div id="matrixSettingsContainer"></div>
+  </div>
+
+  <!-- Automated Status Updates Section -->
+  <div class="settings-section-divider">
+    <div id="automatedStatusContainer"></div>
+  </div>
+
+  <!-- Scheduled Backup Settings Section -->
+  <div class="settings-section-divider">
+    <div id="backupSettingsContainer"></div>
+  </div>
+</div>
+
+</div><!-- end content -->
+</div><!-- end app -->
+
+<!-- NOTE MODAL -->
+<div class="note-edit-modal" id="noteModal">
+  <div class="note-editor" id="noteEditorBox">
+    <div class="note-editor-header">
+      <div class="note-editor-title">Create Note</div>
+      <div class="d-flex gap-12 align-items-center">
+        <div class="note-color-picker">
+          <div class="color-dot active" style="background:#fef3c7;" onclick="changeNoteColor('yellow')" title="Yellow"></div>
+          <div class="color-dot" style="background:#fce7f3;" onclick="changeNoteColor('pink')" title="Pink"></div>
+          <div class="color-dot" style="background:#dbeafe;" onclick="changeNoteColor('blue')" title="Blue"></div>
+          <div class="color-dot" style="background:#dcfce7;" onclick="changeNoteColor('green')" title="Green"></div>
+          <div class="color-dot" style="background:#ede9fe;" onclick="changeNoteColor('purple')" title="Purple"></div>
+          <div class="color-dot" style="background:#fee2e2;" onclick="changeNoteColor('red')" title="Red"></div>
+        </div>
+        <button class="modal-close" onclick="closeNoteModal()">×</button>
+      </div>
+    </div>
+    
+    <div class="note-input-group">
+      <label for="noteTitle" class="note-input-label">📌 Note Title</label>
+      <input type="text" id="noteTitle" name="noteTitle" class="note-input" placeholder="Enter note title..." maxlength="100">
+    </div>
+    
+    <div class="note-input-group">
+      <label for="noteContent" class="note-input-label">📝 Note Content</label>
+      <textarea id="noteContent" name="noteContent" class="note-textarea" placeholder="Write your notes here..."></textarea>
+      <div class="note-input-helper">💡 Timestamps are automatically added when you save</div>
+    </div>
+    
+    <div class="note-input-group">
+      <div class="note-input-label">🏷️ Tags</div>
+      <div class="tag-select-list max-h-150 overflow-y-auto" id="noteTagsContainer"></div>
+    </div>
+    
+    <div class="note-input-group">
+      <div class="note-input-label">🔗 Link to Records</div>
+      <div class="tag-select-list max-h-200 overflow-y-auto" id="noteRecordsContainer"></div>
+    </div>
+    
+    <div class="note-editor-actions">
+      <button class="btn btn-secondary" onclick="closeNoteModal()">Cancel</button>
+      <button class="btn btn-primary" id="noteSaveBtn" onclick="saveNote()">💾 Save Note</button>
+    </div>
+  </div>
+</div>
+
+<!-- JIRA STORY DETAILS MODAL -->
+<div class="modal-overlay" id="jiraStoryDetailsModal" onclick="if(event.target === this) closeJiraStoryDetailsModal()">
+  <div class="modal modal-max-1000 modal-max-h-90">
+    <div class="modal-header modal-header-gradient">
+      <div class="modal-title">
+        <span class="modal-title-emoji">👁️</span>
+        <span>Story Details</span>
+      </div>
+      <button class="modal-close" onclick="closeJiraStoryDetailsModal()">×</button>
+    </div>
+    <div class="modal-body modal-body-scroll">
+      <div id="jiraStoryDetailsContent">
+        <!-- Content will be populated by JavaScript -->
+      </div>
+    </div>
+    <div class="modal-footer modal-footer-bordered">
+      <button class="btn btn-secondary" onclick="closeJiraStoryDetailsModal()">Close</button>
+      <button class="btn btn-primary" id="viewInJiraBtn" onclick="openStoryInJira()">🔗 Open in JIRA</button>
+    </div>
+  </div>
+</div>
+
+<!-- STORAGE INFO MODAL -->
+<div class="modal-overlay" id="storageInfoModal">
+  <div class="modal modal-max-700">
+    <div class="modal-header">
+      <div class="modal-title">💾 Storage Information</div>
+      <button class="modal-close" onclick="closeStorageInfoModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="storage-kpi-grid">
+        <div class="storage-kpi-box">
+          <div class="storage-kpi-label">Total Records</div>
+          <div class="storage-kpi-value" id="storage-total-records">0</div>
+          <div class="storage-kpi-description">Stories in database</div>
+        </div>
+        <div class="storage-kpi-box">
+          <div class="storage-kpi-label">Data Size</div>
+          <div class="storage-kpi-value storage-kpi-value-secondary" id="storage-data-size">0 KB</div>
+          <div class="storage-kpi-description">Total storage used</div>
+        </div>
+      </div>
+      
+      <div class="storage-section-box">
+        <div class="storage-section-title">📊 Data Breakdown</div>
+        <div class="storage-breakdown-grid">
+          <div class="storage-breakdown-item">
+            <span class="storage-breakdown-label">Custom Columns:</span>
+            <strong class="storage-breakdown-value accent" id="storage-custom-cols">0</strong>
+          </div>
+          <div class="storage-breakdown-item">
+            <span class="storage-breakdown-label">Notes:</span>
+            <strong class="storage-breakdown-value accent3" id="storage-notes">0</strong>
+          </div>
+          <div class="storage-breakdown-item">
+            <span class="storage-breakdown-label">Tags:</span>
+            <strong class="storage-breakdown-value accent4" id="storage-tags">0</strong>
+          </div>
+          <div class="storage-breakdown-item">
+            <span class="storage-breakdown-label">Custom Tabs:</span>
+            <strong class="storage-breakdown-value accent5" id="storage-custom-tabs">0</strong>
+          </div>
+        </div>
+      </div>
+      
+      <div class="storage-section-box">
+        <div class="storage-section-title">💾 LocalStorage Details</div>
+        <div class="storage-details-list">
+          <div class="storage-details-row">
+            <span class="storage-details-label">Storage Key:</span>
+            <strong class="storage-details-value">sprintTrackerData</strong>
+          </div>
+          <div class="storage-details-row">
+            <span class="storage-details-label">Last Saved:</span>
+            <strong class="storage-details-value" id="storage-last-saved">Never</strong>
+          </div>
+          <div class="storage-details-row">
+            <span class="storage-details-label">Auto-Save:</span>
+            <strong class="storage-details-value success">✓ Enabled</strong>
+          </div>
+          <div class="storage-details-row">
+            <span class="storage-details-label">Storage Available:</span>
+            <strong class="storage-details-value" id="storage-available">~5-10 MB</strong>
+          </div>
+        </div>
+      </div>
+      
+      <div class="storage-info-box">
+        <div class="storage-info-text">
+          <strong>💡 Storage Info:</strong> Your data is saved locally in your browser using localStorage and synced with the PHP backend. All changes are automatically saved when you add, edit, or delete records.
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeStorageInfoModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- RECORD COLUMN SELECTION MODAL -->
+<div class="modal-overlay" id="recordColumnSelectModal">
+  <div class="modal modal-md">
+    <div class="modal-header">
+      <div class="modal-title">🔍 Select Columns to Export</div>
+      <button class="modal-close" onclick="closeRecordColumnSelectModal()">×</button>
+    </div>
+    <div class="mb-20">
+      <p class="font-size-13 color-text2 mb-14">Choose which columns to include in your export</p>
+      <div class="grid-2 max-h-400 overflow-y-auto p-12 bg-surface2 border-radius-sm border" id="recordColumnList"></div>
+    </div>
+    <div class="mb-14 d-flex gap-8">
+      <button class="btn btn-secondary btn-sm" onclick="selectAllRecordColumns()">✓ Select All</button>
+      <button class="btn btn-secondary btn-sm" onclick="deselectAllRecordColumns()">✕ Deselect All</button>
+    </div>
+    <div class="form-actions justify-space-between">
+      <button class="btn btn-secondary" onclick="closeRecordColumnSelectModal()">Cancel</button>
+      <div class="d-flex gap-8">
+        <button class="btn btn-success" onclick="exportRecordsWithColumns('csv')">📥 Export CSV</button>
+        <button class="btn btn-warning" onclick="exportRecordsWithColumns('excel')">📥 Export Excel</button>
+        <button class="btn btn-primary" onclick="exportRecordsWithColumns('pdf')">📥 Export PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES COLUMN SELECTION MODAL -->
+<div class="modal-overlay" id="notesColumnSelectModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">🔍 Select Note Fields to Export</div>
+      <button class="modal-close" onclick="closeColumnSelectModal()">×</button>
+    </div>
+    <div class="mb-20">
+      <p class="font-size-13 color-text2 mb-14">Choose which fields to include in your notes export</p>
+      <div class="grid-2 max-h-350 overflow-y-auto p-12 bg-surface2 border-radius-sm border" id="notesColumnList"></div>
+    </div>
+    <div class="form-actions justify-end">
+      <button class="btn btn-secondary" onclick="closeColumnSelectModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT NOTES MODAL -->
+<div class="modal-overlay" id="importNotesModal">
+  <div class="modal modal-max-500">
+    <div class="modal-header modal-header-gradient">
+      <div class="modal-title">
+        <span class="modal-title-emoji">📤</span>
+        <span>Import Notes</span>
+      </div>
+      <button class="modal-close" onclick="closeImportModal()">×</button>
+    </div>
+    <div style="padding:30px;">
+      <!-- Info Box -->
+      <div style="background:linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(59,130,246,0.08) 100%);border:1px solid rgba(0,212,255,0.2);border-radius:var(--radius-sm);padding:16px;margin-bottom:24px;">
+        <div style="display:flex;align-items:start;gap:12px;">
+          <span style="font-size:20px;">💡</span>
+          <div style="flex:1;">
+            <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:6px;">How it works</div>
+            <div style="font-size:11px;color:var(--text2);line-height:1.6;">
+              1. Download the template (CSV or TXT format)<br>
+              2. Fill in your notes data using the template<br>
+              3. Upload your completed file<br>
+              4. Preview and select notes to import
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Template Download Buttons -->
+      <div style="margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <button class="btn btn-primary" onclick="downloadNotesCSVTemplate()" style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);border:none;padding:12px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <span style="font-size:16px;">📊</span>
+          <span>CSV Template</span>
+        </button>
+        <button class="btn btn-primary" onclick="downloadNotesTXTTemplate()" style="background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);border:none;padding:12px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <span style="font-size:16px;">📄</span>
+          <span>TXT Template</span>
+        </button>
+      </div>
+      
+      <!-- File Drop Zone -->
+      <div id="notesImportDropZone" 
+           onclick="document.getElementById('notesFileInput').click()"
+           ondrop="handleNotesImportDrop(event)" 
+           ondragover="handleNotesImportDragOver(event)"
+           ondragleave="handleNotesImportDragLeave(event)"
+           style="
+             border:2px dashed rgba(0,212,255,0.4);
+             border-radius:var(--radius-sm);
+             padding:40px 20px;
+             text-align:center;
+             cursor:pointer;
+             background:linear-gradient(135deg, rgba(0,212,255,0.03) 0%, rgba(139,92,246,0.03) 100%);
+             transition:all 0.3s ease;
+             position:relative;
+             overflow:hidden;
+           "
+           onmouseover="this.style.borderColor='var(--accent)';this.style.background='linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(139,92,246,0.08) 100%)'"
+           onmouseout="this.style.borderColor='rgba(0,212,255,0.4)';this.style.background='linear-gradient(135deg, rgba(0,212,255,0.03) 0%, rgba(139,92,246,0.03) 100%)'">
+        
+        <div style="position:relative;z-index:1;">
+          <div style="font-size:48px;margin-bottom:12px;">📁</div>
+          <div style="font-size:14px;font-weight:600;color:var(--accent);margin-bottom:6px;">
+            Drop your file here
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:12px;">
+            or click to browse
+          </div>
+          <div style="display:inline-block;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:4px 12px;font-size:10px;color:var(--accent);font-weight:600;">
+            .CSV OR .TXT FILES
+          </div>
+        </div>
+      </div>
+      
+      <input type="file" id="notesFileInput" accept=".csv,.txt" class="file-input-hidden" onchange="handleNotesFileSelect(event)">
+      
+      <!-- File Requirements -->
+      <div style="margin-top:20px;padding:12px;background:var(--surface2);border-radius:var(--radius-sm);border-left:3px solid var(--accent);">
+        <div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:6px;">📋 File Requirements</div>
+        <ul style="font-size:10px;color:var(--text3);margin:0;padding-left:20px;line-height:1.8;">
+          <li>CSV: First row should contain column headers (Title, Content, Color, Tags)</li>
+          <li>TXT: Use format ==== NOTE: title, TAGS: tag1, tag2, then content on following lines</li>
+          <li>Both formats support import preview and selection</li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-actions modal-footer-bordered">
+      <button class="btn btn-secondary" onclick="closeImportModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">&#9998; Edit Record</div>
+      <button class="modal-close" onclick="closeModal()">&#215;</button>
+    </div>
+    <div class="form-grid" id="editFormGrid"></div>
+    <div class="form-actions mt-16">
+      <button class="btn btn-primary" onclick="updateRecord()">&#128190; Save Changes</button>
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- LINK RECORDS MODAL -->
+<div class="modal-overlay" id="linkModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title">🔗 Link Records</div>
+      <button class="modal-close" onclick="closeLinkModal()">&#215;</button>
+    </div>
+    <div class="mb-20">
+      <div class="link-source-box">
+        <div class="link-source-label">Source Record</div>
+        <div id="linkSourceRecord" class="link-source-text"></div>
+      </div>
+      <div class="link-search-wrapper">
+        <input type="text" id="linkSearchInput" class="link-search-input" placeholder="Search by Jira, PI, Sprint, or Description..." oninput="filterLinkRecords(this.value)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+        <div class="link-search-icon">🔍</div>
+      </div>
+      <div class="link-records-container">
+        <div class="link-records-header">
+          <div class="link-records-title">Available Records</div>
+          <div id="linkRecordsCount" class="link-records-count"></div>
+        </div>
+        <div id="linkRecordsList" class="link-records-list">
+        </div>
+      </div>
+    </div>
+    <div class="link-modal-actions mt-16">
+      <button class="btn btn-primary" id="linkSelectedBtn" onclick="linkSelectedRecords()" disabled class="opacity-50">🔗 Link Selected</button>
+      <button class="btn btn-secondary" onclick="closeLinkModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay modal-z-1100" id="confirmModal">
+  <div class="modal modal-xs">
+    <div class="modal-header">
+      <div class="modal-title" id="confirmModalTitle">⚠️ Confirm Action</div>
+    </div>
+    <div class="modal-body">
+      <div id="confirmModalMessage" class="font-size-14 color-text2 line-height-16"></div>
+    </div>
+    <div class="modal-footer d-flex gap-10 justify-end">
+      <button class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmModalBtn" onclick="confirmModalAction()">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- JavaScript Files -->
+<script src="js/state.js"></script>
+<script src="js/persistence.js"></script>
+<script src="js/init.js"></script>
+<script src="js/tabs.js"></script>
+<script src="js/formatting.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/crud.js"></script>
+<script src="js/table.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/column-select.js"></script>
+<script src="js/record-links.js"></script>
+<script src="js/pagination.js"></script>
+<script src="js/kpi.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/summary.js"></script>
+<script src="js/configuration.js"></script>
+<script src="js/logo-upload.js"></script>
+<script src="js/storage-info.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/export-import.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/tags.js"></script>
+<script src="js/sprint-colors-config.js"></script>
+<script src="js/bulk-operations.js"></script>
+<script src="js/form-grid.js"></script>
+<script src="js/sprint-count.js"></script>
+<script src="js/timestamps.js"></script>
+<script src="js/quick-add.js"></script>
+<script src="js/matrix.js"></script>
+<script src="js/automated-status.js"></script>
+<script src="js/sprint-calendar.js"></script>
+<script src="js/sprint-progress.js"></script>
+<script src="js/sprint-reminders.js"></script>
+<script src="js/sprint-report.js"></script>
+<script src="js/confirm-modal.js"></script>
+<script src="js/lazy-loading.js"></script>
+<script src="js/jira.js"></script>
+<script src="js/work-items.js"></script>
+<script src="js/boot.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+/* Chart Styles */
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chart-card canvas {
+  max-height: 350px !important;
+  height: 350px !important;
+  max-width: 100%;
+}
+
+.chart-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--text2);
+}
+
+.chart-title span {
+  color: var(--accent);
+}
+
+.chart-description {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.chart-description strong {
+  font-weight: 600;
+}

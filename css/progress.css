@@ -1,0 +1,49 @@
+/* Progress Bar Styles */
+.progress-bar-wrap {
+  margin-bottom: 12px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text2);
+  margin-bottom: 5px;
+}
+
+.progress-bar {
+  height: 7px;
+  background: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.pf-blue {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.pf-purple {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+
+.pf-cyan {
+  background: linear-gradient(90deg, #0891b2, #22d3ee);
+}
+
+.pf-green {
+  background: linear-gradient(90deg, #059669, #34d399);
+}
+
+.pf-orange {
+  background: linear-gradient(90deg, #d97706, #fbbf24);
+}
+
+.pf-red {
+  background: linear-gradient(90deg, #dc2626, #f87171);
+}

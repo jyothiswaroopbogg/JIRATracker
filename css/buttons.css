@@ -1,0 +1,78 @@
+/* Button Styles */
+.btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  transition: all .2s;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), rgba(0, 212, 255, .7));
+  color: #0a0e1a;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0, 212, 255, .2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 22px rgba(0, 212, 255, .4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--text2);
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, .1);
+  border-color: rgba(239, 68, 68, .3);
+  color: var(--accent5);
+}
+
+.btn-success {
+  background: rgba(16, 185, 129, .1);
+  border-color: rgba(16, 185, 129, .3);
+  color: var(--accent4);
+}
+
+.btn-warning {
+  background: rgba(245, 158, 11, .1);
+  border-color: rgba(245, 158, 11, .3);
+  color: var(--accent3);
+}
+
+.btn-info {
+  background: var(--surface2);
+  border-color: rgba(124, 58, 237, .4);
+  color: #a78bfa;
+}
+
+.btn-info:hover {
+  border-color: rgba(124, 58, 237, .6);
+  background: rgba(124, 58, 237, .1);
+}
+
+.btn-purple {
+  background: rgba(124, 58, 237, .15);
+  border-color: rgba(124, 58, 237, .3);
+  color: #a78bfa;
+}
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 11px;
+}
