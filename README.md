@@ -1,7 +1,7 @@
 # Sprint Tracker Pro
 
 **Version:** 2.0  
-**Project:** TBCRM3 - Salesforce Vlocity Project  
+**Project:** Sprint Tracker Pro
 **Updated:** March 2026
 
 A comprehensive, enterprise-grade web-based application for tracking and managing Agile sprints, JIRA stories, and work items. Features advanced automation, bidirectional JIRA synchronization, real-time analytics, visual sprint calendar, and customizable workflows designed for Salesforce Vlocity project management.
