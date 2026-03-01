@@ -1697,15 +1697,6 @@ This project is proprietary software. All rights reserved.
 
 ---
 
-## 🙏 Acknowledgments
-
-**Built with**:
-- [Chart.js](https://www.chartjs.org/) - Beautiful charts
-- [jsPDF](https://github.com/parallax/jsPDF) - PDF generation
-- [jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable) - Table generation for PDFs
-- [Google Fonts](https://fonts.google.com/) - Syne and DM Sans fonts
-- JIRA REST API v3 by Atlassian
-
 ## 📞 Contact
 
 **Project Maintained By**: Jyothiswaroop Boggavarapu  
