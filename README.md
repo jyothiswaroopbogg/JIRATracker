@@ -1505,7 +1505,6 @@ NewJirastoriestracker/
 │   └── clear-rate-limits.php    # Rate limit cleanup script
 │
 └── backup/                      # Backup storage directory
-    └── backup_sprint-tracker_2026-02-26T16-30-00.json  # Auto-backup example
 ```
 
 ## 🔒 Security Features
